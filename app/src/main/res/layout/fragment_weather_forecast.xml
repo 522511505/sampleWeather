@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/select_city_bg">
+
+    <ImageView
+        android:id="@+id/img_left_arrow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/left_arrow"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_vertical"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/icon_location"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="3dp"
+            android:src="@drawable/location" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/icon_location"
+            android:layout_toRightOf="@+id/icon_location"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_curTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_location"
+            android:layout_alignStart="@+id/tv_location"
+            android:layout_below="@+id/tv_location"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/rl_head"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_forcast_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/a_week_forecast"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_forcast_tip"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/white" />
+
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/highTemp_char"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_below="@+id/divider"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="120dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/divider"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <LinearLayout
+                android:id="@+id/ll_forecast0"
+                style="@style/ll_style"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/week0"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/date0"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7" />
+
+                <ImageView
+                    android:id="@+id/img_type0"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/tv_weather_forecast0"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_temp0"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_forecast1"
+                style="@style/ll_style"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/week1"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/date1"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7" />
+
+                <ImageView
+                    android:id="@+id/img_type1"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/tv_weather_forecast1"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_temp1"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_forecast2"
+                style="@style/ll_style"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/week2"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/date2"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7" />
+
+                <ImageView
+                    android:id="@+id/img_type2"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/tv_weather_forecast2"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_temp2"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_forecast3"
+                style="@style/ll_style"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/week3"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/date3"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7" />
+
+                <ImageView
+                    android:id="@+id/img_type3"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/tv_weather_forecast3"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_temp3"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_forecast4"
+                style="@style/ll_style"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/week4"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/date4"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7" />
+
+                <ImageView
+                    android:id="@+id/img_type4"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="2"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_weather_forecast4"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_temp4"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_forecast5"
+                style="@style/ll_style"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/week5"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/date5"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7" />
+
+                <ImageView
+                    android:id="@+id/img_type5"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="2"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_weather_forecast5"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_temp5"
+                    style="@style/forcast_textview_style"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

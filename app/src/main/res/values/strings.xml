@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">至简天气</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="weather">当前天气</string>
+    <string name="forecast">天气预报</string>
+    <string name="a_week_forecast">7天预报</string>
+    <string name="settings">设置</string>
+
+    <string name="temp">温度</string>
+    <string name="pm">PM</string>
+    <string name="fengli">风力</string>
+    <string name="fengxiang">风向</string>
+
+    <string name="today">今天</string>
+
+    <string name="message_warning">消息通知</string>
+    <string name="common">通用</string>
+
+    <string name="feedback">意见反馈</string>
+    <string name="check_new_version">检查新版本</string>
+    <string name="about">关于</string>
+    <string name="contact">联系我们</string>
+
+    <string name="please_input_city_name">请输入城市名称</string>
+    <string name="hot_city">热门城市</string>
+
+    <string name="add_city">添加城市</string>
+
+    <string name="test">test</string>
+
+    <string name="hot_city0">北京</string>
+    <string name="hot_city1">上海</string>
+    <string name="hot_city2">广州</string>
+    <string name="hot_city3">深圳</string>
+    <string name="hot_city4">武汉</string>
+    <string name="hot_city5">郑州</string>
+    <string name="hot_city6">杭州</string>
+    <string name="hot_city7">东莞</string>
+    <string name="hot_city8">重庆</string>
+    <string name="hot_city9">长沙</string>
+    <string name="hot_city10">天津</string>
+    <string name="hot_city11">沈阳</string>
+    <string name="hot_city12">长春</string>
+    <string name="hot_city13">福州</string>
+    <string name="hot_city14">无锡</string>
+    <string name="hot_city15">哈尔滨</string>
+    <string name="hot_city16">厦门</string>
+    <string name="hot_city17">石家庄</string>
+    <string name="hot_city18">合肥</string>
+    <string name="hot_city19">南昌</string>
+    <string name="hot_city20">济南</string>
+    <string name="hot_city21">佛山</string>
+    <string name="hot_city22">大连</string>
+    <string name="hot_city23">常州</string>
+    <string name="hot_city24">太原</string>
+    <string name="hot_city25">珠海</string>
+    <string name="hot_city26">香港</string>
+    <string name="hot_city27">澳门</string>
+    <string name="hot_city28">台北</string>
+    <string name="hot_city29">昆明</string>
+    <string name="hot_city30">西安</string>
+    <string name="hot_city31">宁波</string>
+</resources>

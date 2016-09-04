@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background">
+
+    <RelativeLayout
+        android:id="@+id/ll_subject"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/img_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="13dp"
+            android:padding="1dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/menu" />
+
+        <RelativeLayout
+            android:id="@+id/rl_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_menu"
+            android:layout_centerHorizontal="true"
+            >
+
+            <ImageView
+                android:id="@+id/icon_location"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/location" />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/icon_location"
+                android:layout_toRightOf="@+id/icon_location"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_curTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_location"
+                android:layout_alignStart="@+id/tv_location"
+                android:layout_below="@+id/tv_location"
+                android:paddingLeft="5dp"
+                android:gravity="center"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/img_global"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/img_menu"
+            android:layout_marginRight="13dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/global" />
+
+        <TextView
+            android:id="@+id/tv_curTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/icon_curTemp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:text="27"
+            android:textColor="@color/white"
+            android:textSize="130sp" />
+
+        <ImageView
+            android:id="@+id/icon_curTemp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_above="@+id/tip"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/sun" />
+
+        <TextView
+            android:id="@+id/tv_curTemp_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tip"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@id/icon_curTemp"
+            android:layout_toRightOf="@+id/icon_curTemp"
+            android:text="多云"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/horizontal_divider"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:text="tip"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_above="@+id/horizontal_divider"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rect_shape"
+            android:orientation="horizontal" />
+
+        <com.sunfusheng.marqueeview.MarqueeView
+            android:id="@+id/marqueeView"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_above="@+id/horizontal_divider"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="25dp"
+            app:mvAnimDuration="2000"
+            app:mvGravity="center"
+            app:mvInterval="4000"
+            app:mvSingleLine="true"
+            app:mvTextColor="@color/white"
+            app:mvTextSize="14sp" />
+
+        <View
+            android:id="@+id/horizontal_divider"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_above="@+id/ll_weather_detail"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_weather_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_curTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_thermometer"
+                    style="@style/WeatherDetailText"
+                    android:text="@string/temp" />
+
+                <TextView
+                    android:id="@+id/tv_low_high_temp"
+                    style="@style/WeatherDetail"
+                    android:layout_marginTop="@dimen/detail_margin" />
+            </LinearLayout>
+
+            <View style="@style/divider_style" />
+
+            <LinearLayout
+                android:id="@+id/ll_pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_pm_tip"
+                    style="@style/WeatherDetailText"
+                    android:text="@string/pm" />
+
+                <TextView
+                    android:id="@+id/tv_pm"
+                    style="@style/WeatherDetail"
+                    android:layout_marginTop="@dimen/detail_margin" />
+            </LinearLayout>
+
+            <View style="@style/divider_style" />
+
+            <LinearLayout
+                android:id="@+id/ll_fengli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_fengli_tip"
+                    style="@style/WeatherDetailText"
+                    android:text="@string/fengli" />
+
+                <TextView
+                    android:id="@+id/tv_fengli"
+                    style="@style/WeatherDetail"
+                    android:layout_marginTop="@dimen/detail_margin" />
+            </LinearLayout>
+
+            <View style="@style/divider_style" />
+
+            <LinearLayout
+                android:id="@+id/ll_fengxiang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_fengxiang_tip"
+                    style="@style/WeatherDetailText"
+                    android:text="@string/fengxiang" />
+
+                <TextView
+                    android:id="@+id/tv_fengxiang"
+                    style="@style/WeatherDetail"
+                    android:layout_marginTop="@dimen/detail_margin" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

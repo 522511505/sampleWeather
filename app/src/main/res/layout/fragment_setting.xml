@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_grey_300"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_message_warning"
+        style="@style/setting_item_background_style"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/notify" />
+
+        <TextView
+            android:layout_weight="15"
+            android:id="@+id/tv_message_warning"
+            style="@style/setting_item_textView_style"
+            android:text="@string/message_warning" />
+
+        <ImageView
+            android:id="@+id/arrow0"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:layout_marginRight="20dp"
+            style="@style/setting_item_textView_style"
+            android:src="@drawable/arrow" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_300"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_common"
+        style="@style/setting_item_background_style">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/common" />
+
+        <TextView
+            android:layout_weight="15"
+            android:id="@+id/tv_common"
+            style="@style/setting_item_textView_style"
+            android:text="@string/common" />
+
+        <ImageView
+            android:id="@+id/arrow1"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            style="@style/setting_item_textView_style"
+            android:src="@drawable/arrow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_feedback"
+        style="@style/setting_item_background_style"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/feedback" />
+
+        <TextView
+            android:layout_weight="15"
+            android:id="@+id/tv_feedback"
+            style="@style/setting_item_textView_style"
+            android:text="@string/feedback" />
+
+        <ImageView
+            android:id="@+id/arrow2"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            style="@style/setting_item_textView_style"
+            android:src="@drawable/arrow" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_300"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_check_new_version"
+        style="@style/setting_item_background_style">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/check_new_version" />
+
+        <TextView
+            android:layout_weight="15"
+            android:id="@+id/tv_check_new_version"
+            style="@style/setting_item_textView_style"
+            android:text="@string/check_new_version" />
+
+        <ImageView
+            android:id="@+id/arrow3"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            style="@style/setting_item_textView_style"
+            android:src="@drawable/arrow" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_300"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_about"
+        style="@style/setting_item_background_style">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/contact" />
+
+        <TextView
+            android:id="@+id/tv_about"
+            android:layout_weight="15"
+            style="@style/setting_item_textView_style"
+            android:text="@string/about" />
+
+        <ImageView
+            android:id="@+id/arrow4"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            style="@style/setting_item_textView_style"
+            android:src="@drawable/arrow" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_300"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_contact"
+        style="@style/setting_item_background_style">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/contact" />
+
+        <TextView
+            android:id="@+id/tv_contact"
+            android:layout_weight="15"
+            style="@style/setting_item_textView_style"
+            android:text="@string/contact" />
+
+        <ImageView
+            android:id="@+id/arrow5"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            style="@style/setting_item_textView_style"
+            android:src="@drawable/arrow" />
+    </LinearLayout>
+</LinearLayout>

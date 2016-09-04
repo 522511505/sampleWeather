@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="blue">#5a00a1f9</color>
+    <color name="copy_blue">#6400a1f9</color>
+    <color name="colorTrans">#0099e4ff</color>
+    <color name="divider_color">#6498f2ff</color>
+    <color name="main_background">#64a9e9ff</color>
+    <color name="drawer_fragment_background">#6464cff9</color>
+    <color name="divider">#96ffffff</color>
+    <color name="deep_blue">#9678a8ff</color>
+    <color name="transparent_background">#4cb9ffda</color>
+</resources>

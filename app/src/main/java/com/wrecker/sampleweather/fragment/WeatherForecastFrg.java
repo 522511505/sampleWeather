@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.wrecker.sampleweather.activity.MainActivity;
 import com.wrecker.sampleweather.R;
+import com.wrecker.sampleweather.io.Cache;
 import com.wrecker.sampleweather.net.NetConnecttion;
 import com.wrecker.sampleweather.tools.Constances;
 import com.wrecker.sampleweather.tools.ConvertManager;
@@ -109,7 +110,7 @@ public class WeatherForecastFrg extends Fragment {
             String response = NetConnecttion.request(Constances.weatherForecastHttpUrl, requestCityAndCityCode);
             forecastList = NetConnecttion.decodeForecastJSON(response);
 
-            writeToSDCard(forecastList);
+            Cache.writeToSDCard(forecastList, fileName);
 
             handler.sendEmptyMessage(0);
         }
@@ -132,9 +133,9 @@ public class WeatherForecastFrg extends Fragment {
 
         initView(view);
 
-        boolean ifSaved =  getSDcardForacastInfo();
+        forecastList =  Cache.getSDcardForacastInfo(fileName);
 
-        if(true == ifSaved){
+        if(null != forecastList){
             setText();
         }else{
             progressDialog = ProgressDialog.show(getActivity(), "请稍等...", "获取数据中...", true);
@@ -288,47 +289,4 @@ public class WeatherForecastFrg extends Fragment {
         }
     }
 
-    private void writeToSDCard(List list){
-        try{
-
-            FileOutputStream fos = new FileOutputStream(fileName);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(list);
-
-            fos.close();
-            oos.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private boolean getSDcardForacastInfo(){
-
-        FileInputStream fin = null;
-        ObjectInputStream ois = null;
-        try{
-            fin = new FileInputStream(fileName);
-            ois = new ObjectInputStream(fin);
-            List obj = (List)ois.readObject();
-
-            if(null != obj){
-                forecastList = obj;
-                return true;
-            }
-
-            fin.close();
-            ois.close();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally {
-            try{
-                fin.close();
-                ois.close();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
 }

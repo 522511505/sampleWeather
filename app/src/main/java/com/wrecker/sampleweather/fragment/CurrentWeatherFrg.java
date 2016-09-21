@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -36,15 +37,18 @@ import com.wrecker.sampleweather.activity.SelectCityAty;
 import com.wrecker.sampleweather.adapter.WeatherListViewAdapter;
 import com.wrecker.sampleweather.entity.WeatherEntity;
 import com.wrecker.sampleweather.net.NetConnecttion;
+import com.wrecker.sampleweather.present.BasePresent;
+import com.wrecker.sampleweather.present.CurrentWeatherPresent;
 import com.wrecker.sampleweather.tools.Constances;
 import com.wrecker.sampleweather.tools.ConvertManager;
+import com.wrecker.sampleweather.view.CurrentInterface;
 import com.yalantis.phoenix.PullToRefreshView;
 
 
 /**
  * Created by xiaoxin on 2016/8/3.
  */
-public class CurrentWeatherFrg extends Fragment {
+public class CurrentWeatherFrg<V,T extends BasePresent<V>> extends Fragment implements CurrentInterface{
     //当前fragment标记号
     public static final String ARG_SECTION_NUMBER = "0";
 
@@ -76,73 +80,7 @@ public class CurrentWeatherFrg extends Fragment {
     private DrawerLayout mDrawerLayout;
     private View mFragmentContainerView;
 
-    //菜单
-    public static ImageView imgMenu;
-
-    //缓存地址
-    private String fileName = "/sdcard/weatherInfo.txt";
-
-    //获取天气信息的线程
-    private Thread getInfoThread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            //线程休眠0.5秒等待主线程获取定位地址
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            String curCity = Constances.getRequestCity();
-//            //若仍为空，再休眠一秒
-//            if (null == curCity) {
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                curCity = Constances.getRequestCity();
-//            }
-
-            String curCity = "";
-            synchronized (Constances.getCity()) {
-                while ("" == Constances.getCity()[0]) {
-                    try {
-                        Constances.getCity().wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                curCity = Constances.getRequestCity();
-            }
-
-            //向服务器请求数据
-            String response = NetConnecttion.request(Constances.cityNameHttpUrl, curCity);
-            Map map = NetConnecttion.decodeJSONToMap(response);
-
-            if (null != map) {
-                //由于Constances.cityNameHttpUrl这个API取不到aqi这个参数，需要从Constances.weatherForecastHttpUrl这个API取。
-                String requestCityAndCityCode = Constances.getRequestCityAndCityCode();
-                String response2 = NetConnecttion.request(Constances.weatherForecastHttpUrl, requestCityAndCityCode);
-                Map todayInfo = NetConnecttion.decodeForecastTodayJSON(response2);
-                map.put("aqi", todayInfo.get("aqi"));
-                for (int i = 0; i < 5; i++) {
-                    map.put("detail" + i, todayInfo.get("detail" + i));
-                }
-                list = new ArrayList();
-                list.add(map);
-
-                writeToSDCard(list);
-
-                setListAdapter();
-            } else {
-                Toast.makeText(getActivity(),"服务器出错",Toast.LENGTH_SHORT).show();
-                getActivity().finish();
-                Log.e("请求出错", "error");
-            }
-            //更新完列表数据，则关闭对话框
-            progressDialog.dismiss();
-        }
-    });
+    private CurrentWeatherPresent currentWeatherPresent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -153,28 +91,43 @@ public class CurrentWeatherFrg extends Fragment {
 
         initView(view);
 
+        //构建CurrentWeatherPresent，与CurrentView建立连接
+//        currentWeatherPresent.attachView(this);
+
+        currentWeatherPresent = new CurrentWeatherPresent(this);
+        //请求数据
+        currentWeatherPresent.getWeatherInfo();
+
         addListener();
-
-        boolean ifSaved = getSDcardWeatherInfo();
-
-        if(true == ifSaved){
-
-            setListAdapter();
-
-        }else{
-
-            progressDialog = ProgressDialog.show(getActivity(), "请稍等...", "获取位置中...", true);
-
-            getInfoThread.start();
-        }
 
         return view;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        writeToSDCard(null);
+    public void showProgressDialog() {
+        progressDialog = ProgressDialog.show(getActivity(), "请稍等...", "获取位置中...", true);
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void showWeatherInfo(List list) {
+
+    }
+
+    //present获取信息后回调
+    @Override
+    public void setListViewAdapter(final List list) {
+        mhandler.post(new Runnable() {
+            public void run() {
+                //将获取到的数据更新到列表中
+                adapter = new WeatherListViewAdapter(getContext(), list, getWindowHeight(), mFragmentContainerView, mDrawerLayout);
+                listView.setAdapter(adapter);
+            }
+        });
     }
 
     //初始化控件
@@ -211,72 +164,11 @@ public class CurrentWeatherFrg extends Fragment {
         });
     }
 
-    //设置适配器
-    public void setListAdapter() {
-        mhandler.post(new Runnable() {
-            public void run() {
-                //将获取到的数据更新到列表中
-                adapter = new WeatherListViewAdapter(getContext(), list, getWindowHeight(), mFragmentContainerView, mDrawerLayout);
-                listView.setAdapter(adapter);
-            }
-        });
-    }
-
     //获得屏幕高度
     private int getWindowHeight() {
         Rect rect = new Rect();
         getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
         Constances.setWindowHeight(rect.height());
         return rect.height();
-    }
-
-    //获得状态栏高度
-    private int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
-    private void writeToSDCard(List list){
-        try{
-
-            FileOutputStream fos = new FileOutputStream(fileName);
-
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(list);
-
-            fos.close();
-            oos.close();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private boolean getSDcardWeatherInfo(){
-
-        try{
-            FileInputStream fin = new FileInputStream(fileName);
-
-            ObjectInputStream ois = new ObjectInputStream(fin);
-
-            List obj = (List)ois.readObject();
-
-            if(null != obj){
-                list = obj;
-                return true;
-            }
-
-            fin.close();
-            ois.close();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return false;
     }
 }

@@ -20,6 +20,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -74,6 +79,9 @@ public class CurrentWeatherFrg extends Fragment {
     //菜单
     public static ImageView imgMenu;
 
+    //缓存地址
+    private String fileName = "/sdcard/weatherInfo.txt";
+
     //获取天气信息的线程
     private Thread getInfoThread = new Thread(new Runnable() {
         @Override
@@ -122,6 +130,9 @@ public class CurrentWeatherFrg extends Fragment {
                 }
                 list = new ArrayList();
                 list.add(map);
+
+                writeToSDCard(list);
+
                 setListAdapter();
             } else {
                 Toast.makeText(getActivity(),"服务器出错",Toast.LENGTH_SHORT).show();
@@ -144,11 +155,26 @@ public class CurrentWeatherFrg extends Fragment {
 
         addListener();
 
-        progressDialog = ProgressDialog.show(getActivity(), "请稍等...", "获取位置中...", true);
+        boolean ifSaved = getSDcardWeatherInfo();
 
-        getInfoThread.start();
+        if(true == ifSaved){
+
+            setListAdapter();
+
+        }else{
+
+            progressDialog = ProgressDialog.show(getActivity(), "请稍等...", "获取位置中...", true);
+
+            getInfoThread.start();
+        }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        writeToSDCard(null);
     }
 
     //初始化控件
@@ -212,5 +238,45 @@ public class CurrentWeatherFrg extends Fragment {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    private void writeToSDCard(List list){
+        try{
+
+            FileOutputStream fos = new FileOutputStream(fileName);
+
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(list);
+
+            fos.close();
+            oos.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private boolean getSDcardWeatherInfo(){
+
+        try{
+            FileInputStream fin = new FileInputStream(fileName);
+
+            ObjectInputStream ois = new ObjectInputStream(fin);
+
+            List obj = (List)ois.readObject();
+
+            if(null != obj){
+                list = obj;
+                return true;
+            }
+
+            fin.close();
+            ois.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

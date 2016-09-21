@@ -18,11 +18,19 @@ import com.wrecker.sampleweather.fragment.NavigationDrawerFragment;
 import com.wrecker.sampleweather.fragment.SettingFrg;
 import com.wrecker.sampleweather.fragment.WeatherForecastFrg;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks  {
 
     private static final int OPENEDGPS = 0;
+
+    //缓存地址
+    private String fileName0 = "/sdcard/weatherInfo.txt";
+    //保存天气预测的信息地址
+    private String fileName1 = "/sdcard/forcastInfo.txt";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -98,6 +106,31 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        deleteInfo();
+    }
+
+    public void deleteInfo(){
+        try{
+
+            FileOutputStream fos = new FileOutputStream(fileName0);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(null);
+
+            fos = new FileOutputStream(fileName1);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(null);
+
+            fos.close();
+            oos.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -127,4 +160,5 @@ public class MainActivity extends ActionBarActivity
                     .show();
         }
     }
+
 }

@@ -24,6 +24,10 @@ import com.wrecker.sampleweather.tools.Constances;
 import com.wrecker.sampleweather.tools.ConvertManager;
 import com.wrecker.sampleweather.tools.WeatherImageManager;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 import lecho.lib.hellocharts.formatter.LineChartValueFormatter;
@@ -94,6 +98,9 @@ public class WeatherForecastFrg extends Fragment {
     //当前fragment标记号
     public static final String ARG_SECTION_NUMBER = "2";
 
+    //保存天气预测的信息地址
+    private String fileName = "/sdcard/forcastInfo.txt";
+
     private Thread getforecastThread = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -101,6 +108,9 @@ public class WeatherForecastFrg extends Fragment {
             //向服务器请求数据
             String response = NetConnecttion.request(Constances.weatherForecastHttpUrl, requestCityAndCityCode);
             forecastList = NetConnecttion.decodeForecastJSON(response);
+
+            writeToSDCard(forecastList);
+
             handler.sendEmptyMessage(0);
         }
     });
@@ -120,9 +130,17 @@ public class WeatherForecastFrg extends Fragment {
             view = inflater.inflate(R.layout.fragment_weather_forecast, container, false);
         }
 
-        progressDialog = ProgressDialog.show(getActivity(), "请稍等...", "获取数据中...", true);
+        initView(view);
 
-        getforecastThread.start();
+        boolean ifSaved =  getSDcardForacastInfo();
+
+        if(true == ifSaved){
+            setText();
+        }else{
+            progressDialog = ProgressDialog.show(getActivity(), "请稍等...", "获取数据中...", true);
+
+            getforecastThread.start();
+        }
 
         return view;
     }
@@ -134,9 +152,8 @@ public class WeatherForecastFrg extends Fragment {
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void initView(View view) {
+//        super.onViewCreated(view, savedInstanceState);
         mFragmentContainerView = getActivity().findViewById(R.id.navigation_drawer);
         mDrawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
 
@@ -190,6 +207,12 @@ public class WeatherForecastFrg extends Fragment {
         tempChart = (LineChartView) view.findViewById(R.id.highTemp_char);
         //设置为不可缩放
         tempChart.setInteractive(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        writeToSDCard(null);
     }
 
     private void setText() {
@@ -263,5 +286,49 @@ public class WeatherForecastFrg extends Fragment {
         } else {
             return str.substring(0, str.length() - 1);
         }
+    }
+
+    private void writeToSDCard(List list){
+        try{
+
+            FileOutputStream fos = new FileOutputStream(fileName);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(list);
+
+            fos.close();
+            oos.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private boolean getSDcardForacastInfo(){
+
+        FileInputStream fin = null;
+        ObjectInputStream ois = null;
+        try{
+            fin = new FileInputStream(fileName);
+            ois = new ObjectInputStream(fin);
+            List obj = (List)ois.readObject();
+
+            if(null != obj){
+                forecastList = obj;
+                return true;
+            }
+
+            fin.close();
+            ois.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            try{
+                fin.close();
+                ois.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 }
